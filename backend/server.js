@@ -2,6 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const pool = require('./db');
+const categoriesRouter = require('./routes/categories');
+const productsRouter = require('./routes/products');
 
 const app = express();
 
@@ -25,6 +27,9 @@ app.get('/api/db-test', async (req, res) => {
     res.status(500).json({ connected: false, error: err.message });
   }
 });
+
+app.use('/api/categories', categoriesRouter);
+app.use('/api/products', productsRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
