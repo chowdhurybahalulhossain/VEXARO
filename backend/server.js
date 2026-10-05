@@ -4,6 +4,7 @@ const cors = require('cors');
 const pool = require('./db');
 const categoriesRouter = require('./routes/categories');
 const productsRouter = require('./routes/products');
+const cartRouter = require('./routes/cart');
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.get('/api/db-test', async (req, res) => {
 
 app.use('/api/categories', categoriesRouter);
 app.use('/api/products', productsRouter);
+app.use('/api/cart', cartRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
