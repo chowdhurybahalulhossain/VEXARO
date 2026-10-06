@@ -5,6 +5,9 @@ const pool = require('./db');
 const categoriesRouter = require('./routes/categories');
 const productsRouter = require('./routes/products');
 const cartRouter = require('./routes/cart');
+const ordersRouter = require('./routes/orders');
+const deliveryRouter = require('./routes/delivery');
+const couponsRouter = require('./routes/coupons');
 
 const app = express();
 
@@ -32,6 +35,9 @@ app.get('/api/db-test', async (req, res) => {
 app.use('/api/categories', categoriesRouter);
 app.use('/api/products', productsRouter);
 app.use('/api/cart', cartRouter);
+app.use('/api/orders', ordersRouter);
+app.use('/api/delivery-zones', deliveryRouter);
+app.use('/api/coupons', couponsRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
