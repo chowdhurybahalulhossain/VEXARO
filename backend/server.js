@@ -8,6 +8,16 @@ const cartRouter = require('./routes/cart');
 const ordersRouter = require('./routes/orders');
 const deliveryRouter = require('./routes/delivery');
 const couponsRouter = require('./routes/coupons');
+const authRouter = require('./routes/auth');
+const adminCatalogRouter = require('./routes/adminCatalog');
+const adminOrdersRouter = require('./routes/adminOrders');
+const { requireAuth, requireAdmin } = require('./middleware/auth');
+
+// Login tokens cannot be signed or checked without this secret, so stop early.
+if (!process.env.JWT_SECRET || process.env.JWT_SECRET.length < 32) {
+  console.error('JWT_SECRET is missing or too short (use at least 32 characters). Add it to backend/.env');
+  process.exit(1);
+}
 
 const app = express();
 
@@ -38,6 +48,10 @@ app.use('/api/cart', cartRouter);
 app.use('/api/orders', ordersRouter);
 app.use('/api/delivery-zones', deliveryRouter);
 app.use('/api/coupons', couponsRouter);
+app.use('/api/auth', authRouter);
+
+// Everything under /api/admin needs a logged-in admin.
+app.use('/api/admin', requireAuth, requireAdmin, adminCatalogRouter, adminOrdersRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
