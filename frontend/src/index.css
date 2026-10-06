@@ -1,0 +1,480 @@
+/* =====================================================
+   VEXARO design tokens
+   Taken from the VEXARO logo and the "Coming soon" banner:
+   near-black, concrete grey, brass/gold, hazard-tape stripes.
+   Change the colors and fonts here and the whole site follows.
+   ===================================================== */
+:root {
+  color-scheme: dark;
+
+  --ink: #0d0d0f;       /* page background */
+  --charcoal: #17171a;  /* header, image backgrounds */
+  --steel: #2a2a2f;     /* borders and dividers */
+  --concrete: #9a9ba1;  /* secondary text */
+  --cream: #ece5d6;     /* main text */
+  --brass: #d1a548;     /* the one accent: buttons, links, X in the logo */
+  --brass-light: #e2bd68;
+  --sale: #f0624d;      /* discount text on dark */
+  --sale-bg: #c8402f;   /* offer tag background */
+
+  --font-display: 'Archivo', 'Arial Narrow', Arial, sans-serif;
+  --font-body: 'Hind Siliguri', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --gutter: clamp(1rem, 4vw, 3rem);
+  --max: 80rem;
+  /* Side padding that keeps content inside --max on very wide screens. */
+  --edge: max(var(--gutter), calc((100% - var(--max)) / 2));
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--cream);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--brass);
+  outline-offset: 2px;
+}
+
+code {
+  font-family: ui-monospace, 'Cascadia Code', Consolas, monospace;
+  font-size: 0.9em;
+  background: var(--steel);
+  padding: 0 0.3em;
+}
+
+.muted {
+  color: var(--concrete);
+}
+
+/* ---------- wordmark (X in brass, like the logo) ---------- */
+.wordmark {
+  font-family: var(--font-display);
+  font-stretch: 125%;
+  font-weight: 900;
+  font-size: 1.6rem;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  color: var(--cream);
+}
+
+.wordmark__x {
+  color: var(--brass);
+}
+
+/* ---------- hazard tape: the stripe from the logo ---------- */
+.hazard {
+  height: 10px;
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--brass) 0 12px,
+    var(--ink) 12px 24px
+  );
+}
+
+/* ---------- header ---------- */
+.announce {
+  background: #000000;
+  color: var(--concrete);
+  text-align: center;
+  font-size: 0.875rem;
+  padding: 0.4rem var(--gutter);
+}
+
+.site-header {
+  background: var(--charcoal);
+  border-bottom: 1px solid var(--steel);
+}
+
+.site-header__bar {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    'brand links'
+    'search search';
+  align-items: center;
+  gap: 0.75rem 1rem;
+  padding: 0.85rem var(--edge);
+}
+
+.site-header__bar .wordmark {
+  grid-area: brand;
+}
+
+.search {
+  grid-area: search;
+  display: flex;
+}
+
+.search input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--steel);
+  border-right: 0;
+  background: var(--ink);
+  color: var(--cream);
+  font: inherit;
+  border-radius: 0;
+}
+
+.search input::placeholder {
+  color: var(--concrete);
+}
+
+.search button {
+  padding: 0.6rem 1.1rem;
+  border: 1px solid var(--brass);
+  background: var(--brass);
+  color: var(--ink);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 0;
+}
+
+.search button:hover {
+  background: var(--brass-light);
+  border-color: var(--brass-light);
+}
+
+.account-links {
+  grid-area: links;
+  display: flex;
+  gap: 1.25rem;
+  font-weight: 500;
+}
+
+.account-links a,
+.category-nav a {
+  text-decoration: none;
+}
+
+.account-links a:hover,
+.category-nav a:hover {
+  color: var(--brass);
+}
+
+.category-nav {
+  display: flex;
+  gap: 1.75rem;
+  padding: 0.65rem var(--edge);
+  border-top: 1px solid var(--steel);
+  overflow-x: auto;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+@media (min-width: 48rem) {
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .site-header__bar {
+    grid-template-columns: auto minmax(0, 34rem) auto;
+    grid-template-areas: 'brand search links';
+    justify-content: space-between;
+  }
+}
+
+/* ---------- hero ---------- */
+.hero {
+  padding: clamp(2.5rem, 8vw, 6rem) var(--edge) clamp(2rem, 5vw, 3.5rem);
+  /* Fine grain over a soft light from the top left: a hint of the concrete in the logo. */
+  background-color: var(--ink);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse at 15% 0%, #25252a 0%, var(--ink) 65%);
+}
+
+/* The name in brushed-metal grey, with the brass X. */
+.hero__mark {
+  font-family: var(--font-display);
+  font-stretch: 125%;
+  font-weight: 900;
+  font-size: clamp(2.75rem, 15vw, 13rem);
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+  background: linear-gradient(180deg, #e6e6e9 0%, #9b9ca2 55%, #64656b 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.hero__mark .wordmark__x {
+  -webkit-text-fill-color: var(--brass);
+  color: var(--brass);
+}
+
+.hero__line {
+  margin-top: 1.75rem;
+  max-width: 34rem;
+  font-size: 1.25rem;
+  line-height: 1.4;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+
+/* ---------- buttons ---------- */
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.4rem;
+  border: 2px solid var(--brass);
+  background: var(--brass);
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.btn:hover {
+  background: var(--brass-light);
+  border-color: var(--brass-light);
+}
+
+.btn--ghost {
+  background: transparent;
+  border-color: var(--concrete);
+  color: var(--cream);
+}
+
+.btn--ghost:hover {
+  background: var(--cream);
+  border-color: var(--cream);
+  color: var(--ink);
+}
+
+/* ---------- page and sections ---------- */
+.page {
+  padding: 2.5rem var(--edge) 4rem;
+}
+
+.page__title,
+.row h2 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+
+.page__title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  margin-bottom: 0.75rem;
+}
+
+.page__action {
+  margin-top: 1.5rem;
+}
+
+.row {
+  margin-bottom: 3.5rem;
+}
+
+.row h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+.row__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.row__head a {
+  color: var(--brass);
+  font-weight: 500;
+}
+
+.row > .muted,
+.row > .notice {
+  margin-top: 0.75rem;
+}
+
+.notice {
+  padding: 0.9rem 1rem;
+  border-left: 4px solid var(--sale);
+  background: var(--charcoal);
+}
+
+/* ---------- product grid and tiles ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.75rem 1rem;
+}
+
+@media (min-width: 48rem) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem 1.25rem;
+  }
+}
+
+@media (min-width: 64rem) {
+  .grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.tile {
+  display: block;
+  text-decoration: none;
+}
+
+.tile__image {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  background: var(--charcoal);
+  overflow: hidden;
+}
+
+.tile__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tile__name {
+  margin-top: 0.75rem;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.tile:hover .tile__name {
+  color: var(--brass);
+}
+
+.tile__price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.15rem 0.6rem;
+  margin-top: 0.25rem;
+}
+
+.tile__now {
+  font-weight: 600;
+}
+
+.tile__was {
+  color: var(--concrete);
+  font-size: 0.9rem;
+}
+
+.tile__off {
+  color: var(--sale);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* Hang-tag shaped label with a notched end. */
+.tag {
+  position: absolute;
+  top: 0.75rem;
+  left: 0;
+  padding: 0.25rem 1rem 0.25rem 0.65rem;
+  background: var(--brass);
+  color: var(--ink);
+  font-size: 0.8rem;
+  font-weight: 600;
+  clip-path: polygon(0 0, 100% 0, calc(100% - 0.5rem) 50%, 100% 100%, 0 100%);
+}
+
+.tag--offered {
+  background: var(--sale-bg);
+  color: #ffffff;
+}
+
+.tile__soldout {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 0.4rem;
+  background: rgba(0, 0, 0, 0.82);
+  color: var(--cream);
+  text-align: center;
+  font-weight: 500;
+}
+
+/* ---------- footer ---------- */
+.site-footer {
+  background: #000000;
+  color: var(--cream);
+  padding: 2.5rem var(--edge);
+}
+
+.site-footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem 2rem;
+}
+
+.wordmark--small {
+  font-size: 1.3rem;
+}
+
+.site-footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+}
+
+.site-footer__links a:hover {
+  color: var(--brass);
+}
+
+.site-footer__copy {
+  color: var(--concrete);
+  font-size: 0.9rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}
