@@ -2,12 +2,14 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getCategories } from '../api.js';
 import { useApi } from '../hooks.js';
+import { useCart } from '../cart/CartContext.js';
 import Wordmark from './Wordmark.jsx';
 
 export default function Header() {
   const navigate = useNavigate();
   const [query, setQuery] = useState('');
   const { data: categories } = useApi(getCategories, []);
+  const { cart } = useCart();
 
   function handleSearch(event) {
     event.preventDefault();
@@ -37,7 +39,10 @@ export default function Header() {
 
         <nav className="account-links" aria-label="Account">
           <Link to="/login">Sign in</Link>
-          <Link to="/cart">Cart</Link>
+          <Link to="/cart" aria-label={`Cart, ${cart.item_count} items`}>
+            Cart
+            {cart.item_count > 0 && <span className="cart-count">{cart.item_count}</span>}
+          </Link>
         </nav>
       </div>
 
