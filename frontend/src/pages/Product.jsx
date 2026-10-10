@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { api } from '../api.js';
 import { useApi } from '../hooks.js';
 import { useCart } from '../cart/CartContext.js';
@@ -51,6 +51,7 @@ export default function Product() {
 
 function ProductView({ product }) {
   const { addToCart } = useCart();
+  const navigate = useNavigate();
   const { images, variants } = product;
 
   const [imageIndex, setImageIndex] = useState(0);
@@ -114,6 +115,31 @@ function ProductView({ product }) {
     } finally {
       setAdding(false);
     }
+  }
+
+  // Buy now: go to checkout with just this item. The cart is not touched.
+  function handleBuyNow() {
+    if (!selected) {
+      setStatus({
+        type: 'error',
+        text: hasSizes ? 'Please choose a size first.' : 'Please choose an option first.',
+      });
+      return;
+    }
+
+    navigate('/checkout', {
+      state: {
+        buyNow: {
+          variant_id: selected.id,
+          quantity,
+          name: product.name,
+          size: selected.size,
+          color: selected.color,
+          unit_price: selected.price,
+          image: images.length > 0 ? images[0].image_url : null,
+        },
+      },
+    });
   }
 
   let whatsappLink = null;
@@ -261,6 +287,9 @@ function ProductView({ product }) {
               <div className="product__actions">
                 <button type="button" className="btn" disabled={adding} onClick={handleAdd}>
                   {adding ? 'Adding...' : 'Add to cart'}
+                </button>
+                <button type="button" className="btn btn--ghost" onClick={handleBuyNow}>
+                  Buy now
                 </button>
                 {whatsappLink && (
                   <a className="btn btn--ghost" href={whatsappLink} target="_blank" rel="noreferrer">

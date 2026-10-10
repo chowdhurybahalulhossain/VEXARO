@@ -5,6 +5,10 @@ import Footer from './components/Footer.jsx';
 import Home from './pages/Home.jsx';
 import Shop from './pages/Shop.jsx';
 import Product from './pages/Product.jsx';
+import Cart from './pages/Cart.jsx';
+import Checkout from './pages/Checkout.jsx';
+import OrderSuccess from './pages/OrderSuccess.jsx';
+import Track from './pages/Track.jsx';
 import NotFound from './pages/NotFound.jsx';
 
 // Jumps back to the top whenever you open another page or change a filter.
@@ -39,7 +43,11 @@ export default function App() {
         <Route index element={<Home />} />
         <Route path="shop" element={<Shop />} />
         <Route path="product/:slug" element={<Product />} />
-        {/* Next steps add: /cart, /checkout, /track, /login */}
+        <Route path="cart" element={<Cart />} />
+        <Route path="checkout" element={<Checkout />} />
+        <Route path="order/success" element={<OrderSuccess />} />
+        <Route path="track" element={<Track />} />
+        {/* Next steps add: /login, /account */}
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
