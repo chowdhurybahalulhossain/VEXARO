@@ -4,6 +4,7 @@ import { getCategories } from '../api.js';
 import { useApi } from '../hooks.js';
 import { useCart } from '../cart/CartContext.js';
 import Wordmark from './Wordmark.jsx';
+import ThemeToggle from './ThemeToggle.jsx';
 
 export default function Header() {
   const navigate = useNavigate();
@@ -38,6 +39,7 @@ export default function Header() {
         </form>
 
         <nav className="account-links" aria-label="Account">
+          <ThemeToggle />
           <Link to="/login">Sign in</Link>
           <Link to="/cart" aria-label={`Cart, ${cart.item_count} items`}>
             Cart

@@ -8,6 +8,20 @@
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#0d0d0f" />
+    <script>
+      // Runs before the page is drawn, so the saved theme shows from the first moment.
+      // Dark is the default; change 'dark' below if you want new visitors to start in light.
+      (function () {
+        var theme = 'dark';
+        try {
+          if (localStorage.getItem('vexaro_theme') === 'light') theme = 'light';
+        } catch (e) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        if (theme === 'light') {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f4f1ea');
+        }
+      })();
+    </script>
     <meta
       name="description"
       content="VEXARO - clothing for men, women and kids, delivered across Bangladesh."

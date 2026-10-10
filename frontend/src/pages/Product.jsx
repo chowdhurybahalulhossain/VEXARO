@@ -9,6 +9,9 @@ import NotFound from './NotFound.jsx';
 
 const MAX_PER_ORDER = 10;
 
+// At or below this many pieces the real number is shown to the customer.
+const LOW_STOCK = 5;
+
 const BADGE_LABELS = {
   best_selling: 'Best seller',
   new_arrival: 'New',
@@ -78,6 +81,34 @@ function ProductView({ product }) {
 
   const soldOut = variants.length === 0 || variants.every((variant) => variant.stock === 0);
   const maxQuantity = selected ? Math.min(selected.stock, MAX_PER_ORDER) : MAX_PER_ORDER;
+
+  // A color is sold out when every size of it has no stock left.
+  const colorSoldOut = (value) =>
+    variants.filter((variant) => variant.color === value).every((variant) => variant.stock === 0);
+
+  // The stock line under the price. Once a size is chosen:
+  //   more than LOW_STOCK pieces -> "In stock"
+  //   LOW_STOCK or fewer         -> "In stock, only 3 pieces left" (the real number)
+  //   none                       -> "Out of stock"
+  let stockLine;
+  if (soldOut) {
+    stockLine = { type: 'out', text: 'Out of stock' };
+  } else if (selected) {
+    if (selected.stock === 0) {
+      stockLine = { type: 'out', text: 'Out of stock' };
+    } else if (selected.stock <= LOW_STOCK) {
+      stockLine = {
+        type: 'in',
+        text: `In stock, only ${selected.stock} ${selected.stock === 1 ? 'piece' : 'pieces'} left`,
+      };
+    } else {
+      stockLine = { type: 'in', text: 'In stock' };
+    }
+  } else if (colorSoldOut(color)) {
+    stockLine = { type: 'out', text: color ? `Out of stock in ${color}` : 'Out of stock' };
+  } else {
+    stockLine = { type: 'in', text: 'In stock' };
+  }
 
   const price = selected ? selected.price : product.final_price;
   const onSale = price < product.price;
@@ -205,9 +236,11 @@ function ProductView({ product }) {
             )}
           </p>
 
-          {soldOut ? (
-            <p className="status status--error">This product is sold out right now.</p>
-          ) : (
+          <p className={`stock stock--${stockLine.type}`} aria-live="polite">
+            {stockLine.text}
+          </p>
+
+          {soldOut ? null : (
             <>
               {hasColors && (
                 <div className="option">
@@ -219,8 +252,9 @@ function ProductView({ product }) {
                       <button
                         key={item}
                         type="button"
-                        className="chip"
+                        className={`chip${colorSoldOut(item) ? ' chip--soldout' : ''}`}
                         aria-pressed={item === color}
+                        title={colorSoldOut(item) ? 'Out of stock in this color' : undefined}
                         onClick={() => chooseColor(item)}
                       >
                         {item}
@@ -255,9 +289,6 @@ function ProductView({ product }) {
                       </button>
                     ))}
                   </div>
-                  {selected && selected.stock > 0 && selected.stock <= 5 && (
-                    <p className="option__hint">Only {selected.stock} left</p>
-                  )}
                 </div>
               )}
 
@@ -282,6 +313,9 @@ function ProductView({ product }) {
                     +
                   </button>
                 </div>
+                {quantity >= MAX_PER_ORDER && (
+                  <p className="option__hint">You can order up to {MAX_PER_ORDER} pieces at a time.</p>
+                )}
               </div>
 
               <div className="product__actions">

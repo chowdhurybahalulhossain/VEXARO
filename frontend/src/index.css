@@ -7,16 +7,6 @@
 :root {
   color-scheme: dark;
 
-  --ink: #0d0d0f;       /* page background */
-  --charcoal: #17171a;  /* header, image backgrounds */
-  --steel: #2a2a2f;     /* borders and dividers */
-  --concrete: #9a9ba1;  /* secondary text */
-  --cream: #ece5d6;     /* main text */
-  --brass: #d1a548;     /* the one accent: buttons, links, X in the logo */
-  --brass-light: #e2bd68;
-  --sale: #f0624d;      /* discount text on dark */
-  --sale-bg: #c8402f;   /* offer tag background */
-
   --font-display: 'Archivo', 'Arial Narrow', Arial, sans-serif;
   --font-body: 'Hind Siliguri', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
@@ -24,6 +14,45 @@
   --max: 80rem;
   /* Side padding that keeps content inside --max on very wide screens. */
   --edge: max(var(--gutter), calc((100% - var(--max)) / 2));
+}
+
+/* ---------- DARK theme (the default) ----------
+   The hero, announcement bar and footer always use these dark values,
+   so the brand look stays the same in the light theme too. */
+:root,
+.hero,
+.announce,
+.site-footer {
+  --ink: #0d0d0f;         /* page background */
+  --charcoal: #17171a;    /* header, cards, image backgrounds */
+  --steel: #2a2a2f;       /* borders and dividers */
+  --concrete: #9a9ba1;    /* secondary text */
+  --cream: #ece5d6;       /* main text */
+  --brass: #d1a548;       /* the one accent, used for fills (buttons, tags) */
+  --brass-light: #e2bd68; /* accent fill when hovered */
+  --brass-text: #d1a548;  /* accent used for text and links */
+  --on-brass: #0d0d0f;    /* text written on top of a brass fill */
+  --sale: #f0624d;        /* discount and error text */
+  --sale-bg: #c8402f;     /* offer tag background */
+  --ok: #7bc47f;          /* "In stock" green */
+}
+
+/* ---------- LIGHT theme: switched on by <html data-theme="light"> ---------- */
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  --ink: #f4f1ea;
+  --charcoal: #ffffff;
+  --steel: #d8d3c6;
+  --concrete: #5c5d63;
+  --cream: #17171a;
+  --brass: #d1a548;
+  --brass-light: #bd8f2c;
+  --brass-text: #86600f;
+  --on-brass: #0d0d0f;
+  --sale: #c0392b;
+  --sale-bg: #c8402f;
+  --ok: #26702f;
 }
 
 *,
@@ -62,7 +91,7 @@ a {
 }
 
 :focus-visible {
-  outline: 3px solid var(--brass);
+  outline: 3px solid var(--brass-text);
   outline-offset: 2px;
 }
 
@@ -90,7 +119,7 @@ code {
 }
 
 .wordmark__x {
-  color: var(--brass);
+  color: var(--brass-text);
 }
 
 /* ---------- hazard tape: the stripe from the logo ---------- */
@@ -98,8 +127,8 @@ code {
   height: 10px;
   background: repeating-linear-gradient(
     -45deg,
-    var(--brass) 0 12px,
-    var(--ink) 12px 24px
+    #d1a548 0 12px,
+    #0d0d0f 12px 24px
   );
 }
 
@@ -157,7 +186,7 @@ code {
   padding: 0.6rem 1.1rem;
   border: 1px solid var(--brass);
   background: var(--brass);
-  color: var(--ink);
+  color: var(--on-brass);
   font: inherit;
   font-weight: 600;
   cursor: pointer;
@@ -183,7 +212,7 @@ code {
 
 .account-links a:hover,
 .category-nav a:hover {
-  color: var(--brass);
+  color: var(--brass-text);
 }
 
 .category-nav {
@@ -237,7 +266,7 @@ code {
 
 .hero__mark .wordmark__x {
   -webkit-text-fill-color: var(--brass);
-  color: var(--brass);
+  color: var(--brass-text);
 }
 
 .hero__line {
@@ -260,7 +289,7 @@ code {
   padding: 0.75rem 1.4rem;
   border: 2px solid var(--brass);
   background: var(--brass);
-  color: var(--ink);
+  color: var(--on-brass);
   font-weight: 600;
   text-decoration: none;
   transition: background-color 0.15s, color 0.15s;
@@ -322,7 +351,7 @@ code {
 }
 
 .row__head a {
-  color: var(--brass);
+  color: var(--brass-text);
   font-weight: 500;
 }
 
@@ -383,7 +412,7 @@ code {
 }
 
 .tile:hover .tile__name {
-  color: var(--brass);
+  color: var(--brass-text);
 }
 
 .tile__price {
@@ -416,7 +445,7 @@ code {
   left: 0;
   padding: 0.25rem 1rem 0.25rem 0.65rem;
   background: var(--brass);
-  color: var(--ink);
+  color: var(--on-brass);
   font-size: 0.8rem;
   font-weight: 600;
   clip-path: polygon(0 0, 100% 0, calc(100% - 0.5rem) 50%, 100% 100%, 0 100%);
@@ -434,7 +463,7 @@ code {
   left: 0;
   padding: 0.4rem;
   background: rgba(0, 0, 0, 0.82);
-  color: var(--cream);
+  color: #ece5d6;
   text-align: center;
   font-weight: 500;
 }
@@ -465,7 +494,7 @@ code {
 }
 
 .site-footer__links a:hover {
-  color: var(--brass);
+  color: var(--brass-text);
 }
 
 .site-footer__copy {
@@ -483,7 +512,7 @@ code {
   padding: 0 0.3rem;
   border-radius: 999px;
   background: var(--brass);
-  color: var(--ink);
+  color: var(--on-brass);
   font-size: 0.75rem;
   font-weight: 700;
   line-height: 1;
@@ -505,7 +534,7 @@ button.btn {
   padding: 0;
   border: 0;
   background: none;
-  color: var(--brass);
+  color: var(--brass-text);
   font: inherit;
   text-decoration: underline;
   cursor: pointer;
@@ -604,11 +633,11 @@ button.btn {
 }
 
 .filter-link:hover {
-  color: var(--brass);
+  color: var(--brass-text);
 }
 
 .filter-link[aria-current='true'] {
-  color: var(--brass);
+  color: var(--brass-text);
   font-weight: 600;
 }
 
@@ -676,7 +705,7 @@ button.btn {
 .pagination button[aria-current='page'] {
   border-color: var(--brass);
   background: var(--brass);
-  color: var(--ink);
+  color: var(--on-brass);
   font-weight: 600;
 }
 
@@ -701,7 +730,7 @@ button.btn {
 }
 
 .crumbs a:hover {
-  color: var(--brass);
+  color: var(--brass-text);
 }
 
 .product {
@@ -763,7 +792,7 @@ button.btn {
   margin-bottom: 0.6rem;
   padding: 0.15rem 0.7rem;
   background: var(--brass);
-  color: var(--ink);
+  color: var(--on-brass);
   font-size: 0.85rem;
   font-weight: 600;
 }
@@ -817,7 +846,7 @@ button.btn {
 }
 
 .option__label a {
-  color: var(--brass);
+  color: var(--brass-text);
   font-size: 0.9rem;
   font-weight: 400;
 }
@@ -830,7 +859,7 @@ button.btn {
 
 .option__hint {
   margin-top: 0.5rem;
-  color: var(--sale);
+  color: var(--concrete);
   font-size: 0.9rem;
 }
 
@@ -851,7 +880,7 @@ button.btn {
 .chip[aria-pressed='true'] {
   border-color: var(--brass);
   background: var(--brass);
-  color: var(--ink);
+  color: var(--on-brass);
   font-weight: 600;
 }
 
@@ -860,6 +889,81 @@ button.btn {
   color: var(--concrete);
   text-decoration: line-through;
   cursor: not-allowed;
+}
+
+/* A color whose sizes are all sold out: crossed out but still clickable, so the customer can look. */
+.chip--soldout {
+  border-color: var(--steel);
+  color: var(--concrete);
+  text-decoration: line-through;
+}
+
+.chip--soldout[aria-pressed='true'] {
+  background: transparent;
+  border-color: var(--brass);
+  color: var(--cream);
+}
+
+/* In stock (green) / Out of stock (red), shown under the price. */
+.stock {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.6rem;
+  font-weight: 600;
+}
+
+.stock::before {
+  content: '';
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.stock--in {
+  color: var(--ok);
+}
+
+.stock--out {
+  color: var(--sale);
+}
+
+.stock {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.6rem;
+  font-weight: 500;
+}
+
+.stock::before {
+  content: '';
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.stock--in {
+  color: var(--ok);
+}
+
+.stock--out {
+  color: var(--sale);
+}
+
+/* A color with every size sold out: struck through but still clickable, so the shopper can see why. */
+.chip--soldout {
+  border-color: var(--steel);
+  color: var(--concrete);
+  text-decoration: line-through;
+}
+
+.chip--soldout[aria-pressed='true'] {
+  background: transparent;
+  border-color: var(--brass);
+  color: var(--cream);
 }
 
 .qty {
@@ -901,7 +1005,7 @@ button.btn {
 }
 
 .status--ok {
-  color: var(--brass);
+  color: var(--brass-text);
 }
 
 .status--error {
@@ -967,7 +1071,7 @@ button.btn {
 }
 
 .cart-line__name:hover {
-  color: var(--brass);
+  color: var(--brass-text);
 }
 
 .cart-line__variant {
@@ -1015,7 +1119,7 @@ button.btn {
 }
 
 .summary__row--discount {
-  color: var(--brass);
+  color: var(--brass-text);
 }
 
 .summary__row--total {
@@ -1042,7 +1146,7 @@ button.btn {
 }
 
 .summary__link a {
-  color: var(--brass);
+  color: var(--brass-text);
 }
 
 .summary-items {
@@ -1204,7 +1308,7 @@ button.btn {
 
 .success__number {
   margin: 0.5rem 0 1.5rem;
-  color: var(--brass);
+  color: var(--brass-text);
   font-family: var(--font-display);
   font-size: clamp(1.6rem, 4vw, 2.4rem);
   font-weight: 800;
@@ -1257,7 +1361,7 @@ button.btn {
 }
 
 .tracked__number {
-  color: var(--brass);
+  color: var(--brass-text);
   font-family: var(--font-display);
   font-size: clamp(1.4rem, 3vw, 2rem);
   font-weight: 800;
@@ -1291,6 +1395,35 @@ button.btn {
 .step[aria-current='step'] {
   font-weight: 600;
 }
+
+/* ---------- theme toggle ---------- */
+.account-links {
+  align-items: center;
+}
+
+.theme-toggle {
+  display: inline-grid;
+  width: 2.25rem;
+  height: 2.25rem;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--steel);
+  border-radius: 0;
+  background: transparent;
+  color: var(--cream);
+  cursor: pointer;
+}
+
+.theme-toggle:hover {
+  border-color: var(--brass-text);
+  color: var(--brass-text);
+}
+
+.theme-toggle svg {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
 
 @media (prefers-reduced-motion: reduce) {
   * {
